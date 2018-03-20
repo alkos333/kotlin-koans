@@ -1,5 +1,7 @@
 package iii_conventions
 
+import java.sql.Time
+
 data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int): Comparable<MyDate> {
     override operator fun compareTo(other: MyDate): Int {
         return ((year - other.year) * 12 * 4 * 10) +
@@ -8,6 +10,9 @@ data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int): Comparabl
     }
 }
 
+operator fun MyDate.plus(ti: TimeInterval): MyDate = this.addTimeIntervals(ti, 1)
+operator fun MyDate.plus(rti: RepeatedTimeInterval): MyDate = this.addTimeIntervals(rti.ti, rti.number)
+
 operator fun MyDate.rangeTo(other: MyDate): DateRange = DateRange(this, other)
 
 enum class TimeInterval {
@@ -15,6 +20,11 @@ enum class TimeInterval {
     WEEK,
     YEAR
 }
+
+operator fun TimeInterval.times(n: Int): RepeatedTimeInterval = RepeatedTimeInterval(this, n)
+
+class RepeatedTimeInterval(val ti: TimeInterval, val number: Int)
+
 
 class DateRange(val start: MyDate, val endInclusive: MyDate)
 
