@@ -34,8 +34,6 @@ fun todoTask28(): Nothing = TODO(
 
 fun iterateOverDateRange(firstDate: MyDate, secondDate: MyDate, handler: (MyDate) -> Unit) {
     for (date in firstDate..secondDate) {
-        val iterator = (firstDate..secondDate).iterator()
-        println("first: $firstDate, ${iterator.next()}, hasNext: ${iterator.hasNext()}")
         handler(date)
     }
 }
